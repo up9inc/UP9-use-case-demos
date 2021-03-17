@@ -26,6 +26,8 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        ports:
+        - containerPort: 8079
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -41,6 +43,7 @@ metadata:
 spec:
   ports:
   - port: 80
+    targetPort: 8079
     protocol: TCP
   selector:
     name: front-end
