@@ -1,0 +1,21 @@
+
+pipeline {
+    agent none
+
+    stages {
+        stage ("Build Maven") {
+            agent {
+                docker { image 'maven:3-alpine' }
+            }
+            steps {
+                sh 'mvn -DskipTests package'
+            }
+        }
+        stage ("Build docker") {
+            // TODO
+        }
+        stage ("Test") {
+            // TODO
+        }
+    }
+}
