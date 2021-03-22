@@ -5,10 +5,6 @@ COPY *.jar ./app.jar
 
 RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
 
-USER root
-RUN apk --no-cache add curl
-RUN curl -L "https://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.rookout&a=rook&v=LATEST" -o rook.jar
-
 USER ${SERVICE_USER}
 
 ARG BUILD_DATE
@@ -25,8 +21,4 @@ LABEL org.label-schema.vendor="Weaveworks" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 
-ENV ROOKOUT_LABELS=env:dev,app:sockapp,service:shipping
-ENV ROOKOUT_REMOTE_ORIGIN=https://github.com/up9inc/UP9-use-case-demos
-ENV ROOKOUT_COMMIT=master
-
-ENTRYPOINT ["/usr/local/bin/java.sh","-javaagent:rook.jar","-jar","./app.jar", "--port=80"]
+ENTRYPOINT ["/usr/local/bin/java.sh","-jar","./app.jar", "--port=80"]
