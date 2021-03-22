@@ -11,6 +11,8 @@ Go to root foldr of shipping-demo and run
 
 `mvn -DskipTests package`
 
+or
+
 `docker run -v $(pwd):/app -it -w /app maven:3.6.3-openjdk-8-slim mvn -DskipTests package`
 
 ## Build (docker)
