@@ -2,19 +2,21 @@
 [![](https://images.microbadger.com/badges/image/weaveworksdemos/shipping.svg)](http://microbadger.com/images/weaveworksdemos/shipping "Get your own image badge on microbadger.com")
 
 # shipping
-A microservices-demo service that provides shipping capabilities.
-
-This build is built, tested and released by travis.
+A microservices-demo service that provides shipping capabilities. The difference for the original shipping is that we use Kafka and had a small check on method POST, variable ID, if is an uuid4 object.
 
 # Build
 
 ## Java
+Go to root foldr of shipping-demo and run
 
 `mvn -DskipTests package`
+`docker run -v $(pwd):/app -it -w /app maven:3.6.3-openjdk-8-slim mvn -DskipTests package`
 
-## Docker
+## Build (docker)
 
-`GROUP=weaveworksdemos COMMIT=test ./scripts/build.sh`
+Copy the .jar in target/ folder to docker/shipping/, and inside docker/shipping/, run:
+
+`docker build -t shipping-kafka-check-id .`
 
 # Test
 
