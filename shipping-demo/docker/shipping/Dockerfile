@@ -5,8 +5,6 @@ COPY *.jar ./app.jar
 
 RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
 
-redirect?r=central-proxy&g=com.rookout&a=rook&v=LATEST" -o rook.jar
-
 USER ${SERVICE_USER}
 
 ARG BUILD_DATE
