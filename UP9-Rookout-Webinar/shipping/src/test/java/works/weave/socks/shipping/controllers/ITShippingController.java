@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import works.weave.socks.shipping.entities.Shipment;
 import works.weave.socks.shipping.entities.HealthCheck;
+import org.springframework.http.ResponseEntity;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;

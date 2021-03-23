@@ -47,7 +47,7 @@ public class ShippingController {
     ResponseEntity postShipping(@RequestBody Shipment shipment) {
         System.out.println("Adding shipment to queue...");
         try {
-            final String regex = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{13}";
+            final String regex = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
             final String string = shipment.getId();
             final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
             final Matcher matcher = pattern.matcher(string);
