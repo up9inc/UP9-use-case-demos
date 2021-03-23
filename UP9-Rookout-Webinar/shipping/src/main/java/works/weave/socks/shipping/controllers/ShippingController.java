@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.core.ChannelCallback;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import works.weave.socks.shipping.entities.HealthCheck;
@@ -17,6 +18,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 public class ShippingController {
@@ -37,20 +40,31 @@ public class ShippingController {
         return "GET Shipping Resource with id: " + id;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    // @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/shipping", method = RequestMethod.POST)
     public
     @ResponseBody
-    Shipment postShipping(@RequestBody Shipment shipment) {
+    ResponseEntity postShipping(@RequestBody Shipment shipment) {
         System.out.println("Adding shipment to queue...");
         try {
-            kafkaTemplate.send("shipping-task", shipment);
-            
-            rabbitTemplate.convertAndSend("shipping-task", shipment);
+            final String regex = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{13}";
+            final String string = shipment.getId();
+            final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+            final Matcher matcher = pattern.matcher(string);
+            if (matcher.find()) {
+                System.out.println("Full match: " + matcher.group(0));
+
+                kafkaTemplate.send("shipping-task", shipment);
+                rabbitTemplate.convertAndSend("shipping-task", shipment);
+                return new ResponseEntity<>(shipment,HttpStatus.CREATED);
+            } else {
+
+                return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+            }            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return shipment;
+        return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.OK)
