@@ -46,7 +46,7 @@ public class ITShippingController {
     @Test
     public void newShipment() throws Exception {
         Shipment original = new Shipment("someName");
-        Shipment saved = shippingController.postShipping(original);
+        ResponseEntity<Object> saved = shippingController.postShipping(original);
         verify(rabbitTemplate, times(1)).convertAndSend(anyString(), any(Shipment.class));
         assertThat(original, is(equalTo(saved)));
     }
@@ -61,7 +61,7 @@ public class ITShippingController {
     public void doNotCrashWhenNoQueue() throws Exception {
         doThrow(new AmqpException("test error")).when(rabbitTemplate).convertAndSend(anyString(), any(Shipment.class));
         Shipment original = new Shipment("someName");
-        Shipment saved = shippingController.postShipping(original);
+        ResponseEntity<Object> saved = shippingController.postShipping(original);
         verify(rabbitTemplate, times(1)).convertAndSend(anyString(), any(Shipment.class));
         assertThat(original, is(equalTo(saved)));
     }
