@@ -48,4 +48,4 @@ spec:
   selector:
     name: front-end
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP

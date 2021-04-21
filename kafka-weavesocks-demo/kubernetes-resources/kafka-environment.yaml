@@ -82,7 +82,7 @@ metadata:
   labels:
     name: kafka
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   clusterIP: None
   ports:
     - name: tcp-client
@@ -104,7 +104,7 @@ metadata:
   labels:
     name: kafka
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - name: tcp-client
       port: 9092
@@ -281,7 +281,10 @@ spec:
           image: docker.io/bitnami/kafka:2.7.0-debian-10-r68
           imagePullPolicy: "IfNotPresent"
           command:
-            - /scripts/setup.sh
+            - /bin/bash
+            - -c
+          args:
+          - sleep 60; /scripts/setup.sh
           env:
             - name: BITNAMI_DEBUG
               value: "false"
