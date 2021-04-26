@@ -11,7 +11,7 @@ spec:
         image: weaveworksdemos/load-test:0.1.1
         command: ["/bin/bash", "-c"]
         args:
-        - timeout 60s bash -c "while true; do curl -s http://front-end:8079; done"
+        - timeout 60s bash -c "while true; do curl -s http://front-end; done"
       restartPolicy: Never
   backoffLimit: 2
 
@@ -27,6 +27,6 @@ spec:
       containers:
       - name: pi
         image: weaveworksdemos/load-test:0.1.1
-        args: ["-d", "60", "-r", "2002", "-c", "100", "-h", "front-end:8079"]
+        args: ["-d", "60", "-r", "2002", "-c", "100", "-h", "front-end"]
       restartPolicy: Never
   backoffLimit: 2
