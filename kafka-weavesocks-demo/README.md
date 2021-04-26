@@ -17,14 +17,16 @@ Now we need to create those resources, starts with the namespace:
 The kafka pod will be restarted for about 2-5 times before be ready, so don't worry about it.
 Test the application, port-forward the front-end to access the weavesocks app.
 
+```bash
 > kubectl port-forward $(kubectl get pod -l name=front-end | tail -1 | cut -d ' ' -f 1) 8888:8079
+```
 
 Is time now to install up9.
 
 After installed, it'll wait for some traffic be produced before shows the services on up9. To do that:
-
+```bash
 > kubectl apply -R -f job/.
-
+```
 The function of theses jobs is generate traffic, to the whole application, and to the front-end.
 
 And it's done.
