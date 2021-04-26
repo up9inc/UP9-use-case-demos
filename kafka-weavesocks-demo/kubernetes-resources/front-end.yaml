@@ -42,7 +42,7 @@ metadata:
   name: front-end
 spec:
   ports:
-  - port: 8079
+  - port: 80
     nodePort: 30007
     targetPort: 8079
     protocol: TCP
