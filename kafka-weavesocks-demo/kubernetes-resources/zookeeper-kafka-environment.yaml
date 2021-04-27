@@ -305,7 +305,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "INTERNAL://:9093,CLIENT://:9092"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "INTERNAL://kafka-headless.sock-shop.svc.cluster.local:9093,CLIENT://$kafka-headless.sock-shop.svc.cluster.local:9092"
+              value: "INTERNAL://kafka-headless.sock-shop.svc.cluster.local:9093,CLIENT://kafka-headless.sock-shop.svc.cluster.local:9092"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
             - name: KAFKA_VOLUME_DIR
