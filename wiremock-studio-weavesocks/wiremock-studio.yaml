@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiremock-studio
+  labels:
+    name: wiremock-studio
+  namespace: sock-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: wiremock-studio
+  template:
+    metadata:
+      labels:
+        name: wiremock-studio
+    spec:
+      containers:
+      - name: wiremock-studio
+        image: up9inc/wiremock-studio:2.32.0-6
+        # imagePullPolicy: Never
+        ports:
+        - containerPort: 9000
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 9000
+          initialDelaySeconds: 60
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /status
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 3
+      nodeSelector:
+        kubernetes.io/os: linux
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiremock-studio
+  labels:
+    name: wiremock-studio
+  namespace: sock-shop
+spec:
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    name: wiremock-studio
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 34.66.54.65
