@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: wiremock-studio
-        image: up9inc/wiremock-studio:2.32.0-6
+        image: up9inc/wiremock-studio:2.32.0-7
         # imagePullPolicy: Never
         ports:
         - containerPort: 9000
