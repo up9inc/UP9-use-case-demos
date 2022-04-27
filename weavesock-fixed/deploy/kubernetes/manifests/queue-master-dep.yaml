@@ -44,3 +44,4 @@ spec:
           periodSeconds: 3
       nodeSelector:
         beta.kubernetes.io/os: linux
+      automountServiceAccountToken: false
