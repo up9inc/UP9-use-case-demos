@@ -38,3 +38,4 @@ spec:
             medium: Memory
       nodeSelector:
         beta.kubernetes.io/os: linux
+      automountServiceAccountToken: false
